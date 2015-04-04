@@ -3,13 +3,14 @@ import datetime
 import uuid
 import sqlite3
 import logging
+from shutil import copyfile
+import time
 
 class SMSParser(object):
     """
     This class parses a SMS Backup & Restore file and converts its entries to
     Sailfish OS messages which can be imported by using the SMSImporter class.
     """
-
 
     def __init__(self, xml_file):
         """
@@ -20,7 +21,6 @@ class SMSParser(object):
                                 parsed
         """
         self.xml_file = xml_file
-
 
     def get_all_sms_in_sf_format(self):
         """
@@ -105,7 +105,15 @@ class SMSImporter(object):
         Parameters:
             db_path    -    Path to the sqlite3 database
         """
+        self.db_path = db_path
         self.db = sqlite3.connect(db_path)
+        self.c = self.db.cursor()
+        
+    def reload_db(self):
+        """
+        Reloads the database
+        """
+        self.db = sqlite3.connect(self.db_path)
         self.c = self.db.cursor()
         
     def import_sms(self, sf_sms):
@@ -223,3 +231,42 @@ class SMSImporter(object):
         query = "DELETE FROM Groups WHERE 1 = 1;"
         self.c.execute(query)
         self.db.commit()
+        
+class SMSBackup(object):
+    """
+    This class creates and imports simple one-to-one database backups
+    """
+    
+    def __init__(self, db_file, backup_path):
+        """
+        Parameters:
+            db_file        -    Path to the sqlite3 database which should be saved
+            backup_path    -    Path where new backups should be stored
+        """
+        self.db_file = db_file
+        self.backup_path = backup_path
+        
+    def create_backup(self, timestamp=None):
+        """
+        Creates a copy of the database at the specified path named with a timestamp.
+        
+        Parameters:
+            timestamp   -   optional, if you want to declare your own timestamp
+                            or the backup.
+        """
+        if timestamp is None:
+            timestamp = int(time.time())
+        copyfile(self.db_file, self.backup_path + "commhistory-" + str(timestamp) + ".db")
+        logging.info("Saved copy of %s to %s", self.db_file, self.backup_path + "commhistory-" + str(timestamp) + ".db")
+    
+    def restore_backup(self, backup_file):
+        """
+        Copies a backup to the database location. All connections with the database
+        have to be reloaded, otherwise changes will be written to the old copy.
+        
+        Parameters:
+            backup_file    -    Path to the sqlite3 Database which will replace
+                                the current commhistory.db
+        """
+        copyfile(backup_file, self.db_file)
+        logging.info("Restored backup from %s to %s", backup_file, self.db_file)
