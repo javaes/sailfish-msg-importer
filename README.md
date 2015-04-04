@@ -9,6 +9,16 @@ Copy both python files to the same directory on your Sailfish OS phone. The XML-
 
 Open a command shell on your device and navigate to the path were you put the script.
 
-    [nemo@Jolla sms_importer]$ python sms_import [xml-file]
+To import from a SMS Backup & Restore XML file (backup is created):
+
+    [nemo@Jolla]$ python sms_import.py --import [xml-file]
+    
+To backup the current messages database:
+
+    [nemo@Jolla]$ python sms_import.py --backup
+    
+To restore from a backup (replaces everything):
+
+    [nemo@Jolla]$ python sms_import.py --restore [backup-db-file]
 
 If no error message is printed the import was successful.
