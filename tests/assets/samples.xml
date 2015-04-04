@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<!--File Created By manually imitating SMS Backup & Restore-->
+<?xml-stylesheet type="text/xsl" href="sms.xsl"?>
+<smses count="4">
+<sms protocol="0" address="+4949494949499" date="1341324666080" type="2" subject="null" body="Hi Test!" toa="null" sc_toa="null" service_center="null" read="1" status="-1" locked="0" date_sent="0" readable_date="03.07.2012 16:11:06" contact_name="Test" />
+<sms protocol="0" address="+4949494949499" date="1341324992073" type="1" subject="null" body="Bye Tester! :)" toa="null" sc_toa="null" service_center="null" read="1" status="-1" locked="0" date_sent="0" readable_date="03.07.2012 16:16:32" contact_name="Test" />
+<sms protocol="0" address="+4948186548949" date="1341324666080" type="2" subject="null" body="Hi Second!" toa="null" sc_toa="null" service_center="null" read="1" status="-1" locked="0" date_sent="0" readable_date="03.07.2012 16:11:06" contact_name="Second" />
+<sms protocol="0" address="+4948186548949" date="1341324992073" type="1" subject="null" body="Bye Tester! :)" toa="null" sc_toa="null" service_center="null" read="1" status="-1" locked="0" date_sent="0" readable_date="03.07.2012 16:16:32" contact_name="Second" />
+</smses>
