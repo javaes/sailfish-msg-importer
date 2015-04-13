@@ -17,10 +17,14 @@ class SMSBackupTest(unittest.TestCase):
     def tearDown(self):
         self.importer.reload_db()
         self.importer.remove_all_groups_and_msgs()
-        if os.path.isfile(self.empty_backup):
-            os.remove(self.empty_backup)
-        if os.path.isfile(self.non_empty_backup):
-            os.remove(self.non_empty_backup)
+        if self.empty_backup is not None:
+            if os.path.isfile(self.empty_backup):
+                os.remove(self.empty_backup)
+        if self.non_empty_backup is not None:
+            if os.path.isfile(self.non_empty_backup):
+                os.remove(self.non_empty_backup)
+        if os.path.isdir("backup_folder/"):
+            os.rmdir("backup_folder/")
 
     def test_create_and_restore_backup(self):
         timestamp = int(time.time())
@@ -42,6 +46,13 @@ class SMSBackupTest(unittest.TestCase):
         self.importer.reload_db()
         self.assertEqual(self.importer.get_msg_count(), 1)
         self.assertEqual(self.importer.get_group_count(), 1)
+        
+    def test_should_create_backup_folder(self):
+        bt = SMSBackup("assets/test_commhistory.db", "backup_folder/")
+        timestamp = int(time.time())
+        self.empty_backup = "backup_folder/commhistory-" + str(timestamp) + ".db"
+        bt.create_backup(timestamp)
+        self.assertTrue(os.path.isfile(self.empty_backup))
         
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ import sqlite3
 import logging
 from shutil import copyfile
 import time
+import os
 
 class SMSParser(object):
     """
@@ -256,6 +257,8 @@ class SMSBackup(object):
         """
         if timestamp is None:
             timestamp = int(time.time())
+        if not os.path.isdir(self.backup_path):
+            os.mkdir(self.backup_path)
         copyfile(self.db_file, self.backup_path + "commhistory-" + str(timestamp) + ".db")
         logging.info("Saved copy of %s to %s", self.db_file, self.backup_path + "commhistory-" + str(timestamp) + ".db")
     
@@ -270,3 +273,10 @@ class SMSBackup(object):
         """
         copyfile(backup_file, self.db_file)
         logging.info("Restored backup from %s to %s", backup_file, self.db_file)
+        
+def create_backup(db_file, backup_path):
+    """
+    top-level function for easier PyOtherSide integration
+    """
+    backup_tool = SMSBackup(db_file, backup_path)
+    backup_tool.create_backup()
