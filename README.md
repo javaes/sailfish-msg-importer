@@ -1,5 +1,5 @@
 # sailfish-msg-importer
-This little script helps to import messages from other mobile OSs to Sailfish OS. The first version only supports Android SMS messages exported by SMS Backup &amp; Restoree.
+This little script helps to import messages from other mobile OSs to Sailfish OS. The first version only supports Android SMS messages exported by SMS Backup &amp; Restore.
 
 
 Please use with caution, I wrote this script for personal use and the only test case was the import of my old messages from my Android phone.
