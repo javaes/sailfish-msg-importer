@@ -21,11 +21,11 @@ if __name__ == '__main__':
         if sys.argv[1] == "--backup":
             backup_tool.create_backup()
     else:
-        print "SMS Backup & Restore Importer for Sailfish OS"
-        print "Import a XML-File:"
-        print "\tpython sms_import.py --import [xml-file]"
-        print "Create a backup:"
-        print "\tpython sms_import.py --backup"
-        print "Import a commhistory.db Backup:"
-        print "\tpython sms_import.py --restore [backup-file]"
+        print("SMS Backup & Restore Importer for Sailfish OS")
+        print("Import a XML-File:")
+        print("\tpython sms_import.py --import [xml-file]")
+        print("Create a backup:")
+        print("\tpython sms_import.py --backup")
+        print("Import a commhistory.db Backup:")
+        print("\tpython sms_import.py --restore [backup-file]")
         sys.exit()
